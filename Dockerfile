@@ -45,6 +45,7 @@ FROM create-container-user AS nvim-lazy-true
 ARG XDG_CONFIG_HOME
 ARG user
 COPY --chown=${user} ./lazy.lua ${XDG_CONFIG_HOME}/nvim/lua/config/lazy.lua
+COPY --chown=${user} ./lua/plugins/ ${XDG_CONFIG_HOME}/nvim/lua/plugins/
 RUN  echo -e '--LAZY VIM\nrequire("config.lazy")' >> ${XDG_CONFIG_HOME}/nvim/init.lua
 
 
