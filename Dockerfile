@@ -11,7 +11,10 @@ RUN pacman -Syu --noconfirm \
 	git \
 	base-devel \
 	cmake \
-	npm 
+	npm \
+	fzf \
+	tmux \
+	zsh
 RUN git clone https://github.com/neovim/neovim.git --branch stable \
 	&& cd neovim \
 	&& make CMAKE_BUILD_TYPE=Release \
@@ -24,7 +27,7 @@ FROM arch AS create-container-user
 ARG user
 ARG XDG_CONFIG_HOME
 # Configure user dev
-RUN useradd -m -u 1000 ${user}
+RUN useradd -m -u 1000 ${user} --shell /bin/zsh # TODO add plugins to zsh and research about its config files
 RUN chown -R ${user} /home/${user}
 
 FROM create-container-user AS nvim-lazy-false
