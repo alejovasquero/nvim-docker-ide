@@ -40,6 +40,10 @@ COPY --chown=${user} ./lazy.lua ${XDG_CONFIG_HOME}/nvim/lua/config/lazy.lua
 COPY --chown=${user} ./lua/plugins/ ${XDG_CONFIG_HOME}/nvim/lua/plugins/
 RUN echo -e '--LAZY VIM\nrequire("config.lazy")' >> ${XDG_CONFIG_HOME}/nvim/init.lua
 
+# ZSH CONFIGURATION
+COPY --chown=${user} ./zsh /home/${user}/zsh
+RUN ln -s /home/${user}/zsh/.zshenv /home/${user}/.zshenv 
+RUN ln -s /home/${user}/zsh/.zshrc /home/${user}/.zshrc 
 
 FROM nvim-lazy-${install_lazy} AS python-stage-false
 
@@ -54,3 +58,4 @@ FROM python-stage-${python} AS final-stage
 RUN echo "HELLO"
 USER ${user}
 WORKDIR /home/${user}
+CMD [ "zsh" ]
